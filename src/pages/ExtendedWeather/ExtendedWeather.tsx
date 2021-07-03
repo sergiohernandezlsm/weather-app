@@ -4,21 +4,9 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
+import css from "./ExtendedWeather.module.scss";
 import extendedDay from "../../services/extendedDay.json";
-
-export interface WeatherInterface {
-  city_name: string;
-  country_code: string;
-  data: [
-    {
-      weather: {
-        code: number;
-        description: string;
-        icon: string;
-      };
-    }
-  ];
-}
+import { WeatherInterface } from "../../types";
 
 const ExtendedWeather: React.FC = () => {
   const [weather, setWeather] = useState<WeatherInterface[]>([]);
@@ -44,13 +32,14 @@ const ExtendedWeather: React.FC = () => {
           url: `https://weatherbit-v1-mashape.p.rapidapi.com/forecast/daily?city_id=${city.id}`,
           headers: {
             "x-rapidapi-key":
-              "c95c9b227bmsh69e4517c1270c5ep16782ajsnba6c778e0aff",
+              "d020a1a868msh122b0400486fed8p149608jsnb58949d60151",
             "x-rapidapi-host": "weatherbit-v1-mashape.p.rapidapi.com",
           },
         };
         axios
           .request(options)
           .then((response: AxiosResponse) => {
+            console.log("0");
             arrayOfCities.push(response.data);
             // console.log("inside extended ==> ", response.data);
           })
@@ -58,7 +47,9 @@ const ExtendedWeather: React.FC = () => {
             setWeather(error.message);
           });
       });
+      console.log("1");
       setWeather(arrayOfCities);
+      console.log("2");
     } else {
       console.log("outside extended ==> ", extendedDay);
       setWeather(extendedDay);
@@ -72,24 +63,43 @@ const ExtendedWeather: React.FC = () => {
       <Container>
         <Row>
           <Col>
-            <Card className="text-center">
-              {/* <Card.Header>
-                <h1>Location extende: {JSON.stringify(weather?.city_name)}</h1>
-              </Card.Header>
-              <Card.Body>
-                <Card.Title>
-                  description: {JSON.stringify(weather?.weather.description)}
-                </Card.Title>
-                <Card.Text>
-                  icon: {JSON.stringify(weather?.weather.icon)}
-                </Card.Text>
-                <Card.Text>
-                  code: {JSON.stringify(weather?.weather.code)}
-                </Card.Text>
-              </Card.Body>
-              <Card.Footer className="text-muted">
-                clouds: {JSON.stringify(weather?.clouds)}
-              </Card.Footer> */}
+            <Card>
+              {weather.map((city, index) => {
+                return (
+                  <Card key={`key-${index}`} className="text-center">
+                    <Card.Header>
+                      <h3>Location: {JSON.stringify(city?.city_name)}</h3>
+                    </Card.Header>
+                    <Card.Body>
+                      <Container>
+                        <Row>
+                          {city?.data.map((day, index) => {
+                            return (
+                              <Col
+                                key={`key-index-${index}`}
+                                xs={12}
+                                md={3}
+                                className={css.cardStyle}
+                              >
+                                <div className={css.cardWrapper}>
+                                  <Card.Title>Day: {day.datetime}</Card.Title>
+                                  <p>Temperature: {day.temp}</p>
+                                  <p>
+                                    Precipitation: {day.weather.description}
+                                  </p>
+                                  <p>
+                                    Wind: {day.wind_dir} {day.wind_cdir}
+                                  </p>
+                                </div>
+                              </Col>
+                            );
+                          })}
+                        </Row>
+                      </Container>
+                    </Card.Body>
+                  </Card>
+                );
+              })}
             </Card>
           </Col>
         </Row>
