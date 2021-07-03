@@ -4,51 +4,68 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
-import currentDayJson from "../../services/currentDay.json";
+import extendedDay from "../../services/extendedDay.json";
 
 export interface WeatherInterface {
   city_name: string;
-  clouds: number;
-  weather: {
-    code: number;
-    description: string;
-    icon: string;
-  };
+  country_code: string;
+  data: [
+    {
+      weather: {
+        code: number;
+        description: string;
+        icon: string;
+      };
+    }
+  ];
 }
 
 const ExtendedWeather: React.FC = () => {
-  const [weather, setWeather] = useState<WeatherInterface>();
+  const [weather, setWeather] = useState<WeatherInterface[]>([]);
   useEffect(() => {
     getWeather();
   }, []);
 
   const getWeather = () => {
     const trigger = false;
+    const cities = [
+      { id: 6058560, city: "london" },
+      { id: 5039192, city: "newYork" },
+      { id: 1275339, city: "mumbai" },
+      { id: 6354908, city: "sydney" },
+      { id: 1850147, city: "tokyo" },
+    ];
+
+    const arrayOfCities: any[] = [];
     if (trigger) {
-      const options: AxiosRequestConfig = {
-        method: "GET",
-        url: "https://weatherbit-v1-mashape.p.rapidapi.com/forecast/daily",
-        params: { lat: "51.509865", lon: "-0.118092" },
-        headers: {
-          "x-rapidapi-key":
-            "c95c9b227bmsh69e4517c1270c5ep16782ajsnba6c778e0aff",
-          "x-rapidapi-host": "weatherbit-v1-mashape.p.rapidapi.com",
-        },
-      };
-      axios
-        .request(options)
-        .then((response: AxiosResponse) => {
-          setWeather(response.data.data[0]);
-          console.log("inside extended ==> ", response.data.data[0]);
-        })
-        .catch((error) => {
-          setWeather(error.message);
-        });
+      cities.forEach((city) => {
+        const options: AxiosRequestConfig = {
+          method: "GET",
+          url: `https://weatherbit-v1-mashape.p.rapidapi.com/forecast/daily?city_id=${city.id}`,
+          headers: {
+            "x-rapidapi-key":
+              "c95c9b227bmsh69e4517c1270c5ep16782ajsnba6c778e0aff",
+            "x-rapidapi-host": "weatherbit-v1-mashape.p.rapidapi.com",
+          },
+        };
+        axios
+          .request(options)
+          .then((response: AxiosResponse) => {
+            arrayOfCities.push(response.data);
+            // console.log("inside extended ==> ", response.data);
+          })
+          .catch((error) => {
+            setWeather(error.message);
+          });
+      });
+      setWeather(arrayOfCities);
     } else {
-      console.log("outside extended ==> ", currentDayJson);
-      setWeather(currentDayJson);
+      console.log("outside extended ==> ", extendedDay);
+      setWeather(extendedDay);
     }
   };
+
+  console.log("weather ===> ", weather);
 
   return (
     <div>
