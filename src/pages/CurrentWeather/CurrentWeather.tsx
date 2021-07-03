@@ -3,7 +3,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
-import { useFetchCityQuery } from "../../features/city/cityApi";
+import { useFetchCityQuery } from "../../features/cities/citiesApi";
 
 const CurrentWeather: React.FC = () => {
   const { data } = useFetchCityQuery();
