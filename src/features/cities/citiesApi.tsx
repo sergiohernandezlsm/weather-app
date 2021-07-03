@@ -4,14 +4,6 @@ import { WeatherInterface } from "../../types";
 const WEATHER_API_KEY = "cc1ff834bdmsh5b9eaa75a1d2da2p13f921jsn15c0e96f3ee8";
 const API_HOST = "weatherbit-v1-mashape.p.rapidapi.com";
 
-const cities = [
-  { id: 6058560, city: "london" },
-  { id: 5039192, city: "newYork" },
-  { id: 1275339, city: "mumbai" },
-  { id: 6354908, city: "sydney" },
-  { id: 1850147, city: "tokyo" },
-];
-
 export const apiSliceWeather = createApi({
   reducerPath: "apiWeather",
   baseQuery: fetchBaseQuery({

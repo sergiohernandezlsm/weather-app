@@ -1,75 +1,36 @@
-import React, { useEffect, useState } from "react";
-import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import React from "react";
+import { useFetchCitiesQuery } from "../../features/cities/citiesApi";
+import { WeatherInterface } from "../../types";
+import extendedDay from "../../services/extendedDay.json";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import css from "./ExtendedWeather.module.scss";
-import extendedDay from "../../services/extendedDay.json";
-import { WeatherInterface } from "../../types";
-import { useFetchCitiesQuery } from "../../features/cities/citiesApi";
 
 const ExtendedWeather: React.FC = () => {
-  const { data, isFetching } = useFetchCitiesQuery();
+  const cities = [
+    { id: 6058560, city: "london" },
+    { id: 5039192, city: "newYork" },
+    { id: 1275339, city: "mumbai" },
+    { id: 6354908, city: "sydney" },
+    { id: 1850147, city: "tokyo" },
+  ];
+  // const { data: london } = useFetchCitiesQuery(cities[0].id);
+  // const { data: newYork } = useFetchCitiesQuery(cities[1].id);
+  // const { data: mumbai } = useFetchCitiesQuery(cities[2].id);
+  // const { data: sydney } = useFetchCitiesQuery(cities[3].id);
+  // const { data: tokyo } = useFetchCitiesQuery(cities[4].id);
 
-  console.log("other page => ", data);
-
-  // const [weather, setWeather] = useState<WeatherInterface[]>([]);
-  // useEffect(() => {
-  //   getWeather();
-  // }, []);
-
-  // const getWeather = () => {
-  //   const trigger = false;
-  //   const cities = [
-  //     { id: 6058560, city: "london" },
-  //     { id: 5039192, city: "newYork" },
-  //     { id: 1275339, city: "mumbai" },
-  //     { id: 6354908, city: "sydney" },
-  //     { id: 1850147, city: "tokyo" },
-  //   ];
-
-  //   const arrayOfCities: any[] = [];
-  //   if (trigger) {
-  //     cities.forEach((city) => {
-  //       const options: AxiosRequestConfig = {
-  //         method: "GET",
-  //         url: `https://weatherbit-v1-mashape.p.rapidapi.com/forecast/daily?city_id=${city.id}`,
-  //         headers: {
-  //           "x-rapidapi-key":
-  //             "d020a1a868msh122b0400486fed8p149608jsnb58949d60151",
-  //           "x-rapidapi-host": "weatherbit-v1-mashape.p.rapidapi.com",
-  //         },
-  //       };
-  //       axios
-  //         .request(options)
-  //         .then((response: AxiosResponse) => {
-  //           console.log("0");
-  //           arrayOfCities.push(response.data);
-  //           // console.log("inside extended ==> ", response.data);
-  //         })
-  //         .catch((error) => {
-  //           setWeather(error.message);
-  //         });
-  //     });
-  //     console.log("1");
-  //     setWeather(arrayOfCities);
-  //     console.log("2");
-  //   } else {
-  //     console.log("outside extended ==> ", extendedDay);
-  //     setWeather(extendedDay);
-  //   }
-  // };
-
-  // console.log("weather ===> ", weather);
+  // const citiesData = [london, newYork, mumbai, sydney, tokyo];
 
   return (
     <div>
       <Container>
-        {/* <Row>
+        <Row>
           <Col>
             <Card>
-              {weather.map((city, index) => {
+              {extendedDay.map((city, index) => {
                 return (
                   <Card key={`key-${index}`} className="text-center">
                     <Card.Header>
@@ -107,7 +68,7 @@ const ExtendedWeather: React.FC = () => {
               })}
             </Card>
           </Col>
-        </Row> */}
+        </Row>
       </Container>
     </div>
   );

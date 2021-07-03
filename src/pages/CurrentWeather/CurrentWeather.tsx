@@ -17,7 +17,7 @@ export interface WeatherInterface {
 }
 
 const CurrentWeather: React.FC = () => {
-  const { data, isFetching } = useFetchCitiesQuery();
+  const { data } = useFetchCitiesQuery(6058560);
 
   console.log(data);
 
