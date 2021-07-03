@@ -1,4 +1,4 @@
-export interface DaysInterface {
+export interface DayComunDetails {
   datetime: string;
   weather: {
     icon: string;
@@ -8,11 +8,23 @@ export interface DaysInterface {
   wind_cdir: string;
   wind_dir: number;
   temp: number;
+}
+
+export interface Days extends DayComunDetails {
   max_temp: number;
   min_temp: number;
 }
-export interface WeatherInterface {
+export interface Day extends DayComunDetails {
+  city_name: string;
+  clouds: number;
+}
+
+export interface ExtendedWeatherTypes {
   city_name: string;
   country_code: string;
-  data: DaysInterface[];
+  data: Days[];
+}
+
+export interface CurrentWeatherTypes {
+  data: Day[];
 }

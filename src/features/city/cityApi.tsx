@@ -1,11 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { ExtendedWeatherTypes } from "../../types";
+import { CurrentWeatherTypes } from "../../types";
 
 const WEATHER_API_KEY = "cc1ff834bdmsh5b9eaa75a1d2da2p13f921jsn15c0e96f3ee8";
 const API_HOST = "weatherbit-v1-mashape.p.rapidapi.com";
 
-export const apiSliceExtendedWeather = createApi({
-  reducerPath: "apiWeather",
+export const apiSliceCurrentWeather = createApi({
+  reducerPath: "apiCurrentWeather",
   baseQuery: fetchBaseQuery({
     baseUrl: `https://weatherbit-v1-mashape.p.rapidapi.com/`,
     prepareHeaders(headers) {
@@ -16,13 +16,13 @@ export const apiSliceExtendedWeather = createApi({
   }),
   endpoints(builder) {
     return {
-      fetchCities: builder.query<ExtendedWeatherTypes, number | void>({
-        query(cityId = 6058560) {
-          return `/forecast/daily?city_id=${cityId}`;
+      fetchCity: builder.query<CurrentWeatherTypes, number | void>({
+        query(lat = 51.50853, lon = -0.12574) {
+          return `/current?lat=${lat}&lon=${lon}`;
         },
       }),
     };
   },
 });
 
-export const { useFetchCitiesQuery } = apiSliceExtendedWeather;
+export const { useFetchCityQuery } = apiSliceCurrentWeather;
