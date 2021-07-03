@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import { useFetchCitiesQuery } from "./features/cities/citiesApi";
 import "./App.css";
 import CurrentWeather from "./pages/CurrentWeather";
 import ExtendedWeather from "./pages/ExtendedWeather";

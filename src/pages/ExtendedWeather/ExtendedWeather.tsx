@@ -7,61 +7,66 @@ import Card from "react-bootstrap/Card";
 import css from "./ExtendedWeather.module.scss";
 import extendedDay from "../../services/extendedDay.json";
 import { WeatherInterface } from "../../types";
+import { useFetchCitiesQuery } from "../../features/cities/citiesApi";
 
 const ExtendedWeather: React.FC = () => {
-  const [weather, setWeather] = useState<WeatherInterface[]>([]);
-  useEffect(() => {
-    getWeather();
-  }, []);
+  const { data, isFetching } = useFetchCitiesQuery();
 
-  const getWeather = () => {
-    const trigger = false;
-    const cities = [
-      { id: 6058560, city: "london" },
-      { id: 5039192, city: "newYork" },
-      { id: 1275339, city: "mumbai" },
-      { id: 6354908, city: "sydney" },
-      { id: 1850147, city: "tokyo" },
-    ];
+  console.log("other page => ", data);
 
-    const arrayOfCities: any[] = [];
-    if (trigger) {
-      cities.forEach((city) => {
-        const options: AxiosRequestConfig = {
-          method: "GET",
-          url: `https://weatherbit-v1-mashape.p.rapidapi.com/forecast/daily?city_id=${city.id}`,
-          headers: {
-            "x-rapidapi-key":
-              "d020a1a868msh122b0400486fed8p149608jsnb58949d60151",
-            "x-rapidapi-host": "weatherbit-v1-mashape.p.rapidapi.com",
-          },
-        };
-        axios
-          .request(options)
-          .then((response: AxiosResponse) => {
-            console.log("0");
-            arrayOfCities.push(response.data);
-            // console.log("inside extended ==> ", response.data);
-          })
-          .catch((error) => {
-            setWeather(error.message);
-          });
-      });
-      console.log("1");
-      setWeather(arrayOfCities);
-      console.log("2");
-    } else {
-      console.log("outside extended ==> ", extendedDay);
-      setWeather(extendedDay);
-    }
-  };
+  // const [weather, setWeather] = useState<WeatherInterface[]>([]);
+  // useEffect(() => {
+  //   getWeather();
+  // }, []);
 
-  console.log("weather ===> ", weather);
+  // const getWeather = () => {
+  //   const trigger = false;
+  //   const cities = [
+  //     { id: 6058560, city: "london" },
+  //     { id: 5039192, city: "newYork" },
+  //     { id: 1275339, city: "mumbai" },
+  //     { id: 6354908, city: "sydney" },
+  //     { id: 1850147, city: "tokyo" },
+  //   ];
+
+  //   const arrayOfCities: any[] = [];
+  //   if (trigger) {
+  //     cities.forEach((city) => {
+  //       const options: AxiosRequestConfig = {
+  //         method: "GET",
+  //         url: `https://weatherbit-v1-mashape.p.rapidapi.com/forecast/daily?city_id=${city.id}`,
+  //         headers: {
+  //           "x-rapidapi-key":
+  //             "d020a1a868msh122b0400486fed8p149608jsnb58949d60151",
+  //           "x-rapidapi-host": "weatherbit-v1-mashape.p.rapidapi.com",
+  //         },
+  //       };
+  //       axios
+  //         .request(options)
+  //         .then((response: AxiosResponse) => {
+  //           console.log("0");
+  //           arrayOfCities.push(response.data);
+  //           // console.log("inside extended ==> ", response.data);
+  //         })
+  //         .catch((error) => {
+  //           setWeather(error.message);
+  //         });
+  //     });
+  //     console.log("1");
+  //     setWeather(arrayOfCities);
+  //     console.log("2");
+  //   } else {
+  //     console.log("outside extended ==> ", extendedDay);
+  //     setWeather(extendedDay);
+  //   }
+  // };
+
+  // console.log("weather ===> ", weather);
 
   return (
     <div>
       <Container>
-        <Row>
+        {/* <Row>
           <Col>
             <Card>
               {weather.map((city, index) => {
@@ -102,7 +107,7 @@ const ExtendedWeather: React.FC = () => {
               })}
             </Card>
           </Col>
-        </Row>
+        </Row> */}
       </Container>
     </div>
   );
