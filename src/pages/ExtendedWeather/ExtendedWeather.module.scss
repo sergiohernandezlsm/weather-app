@@ -1,0 +1,22 @@
+.cardStyle {
+  padding: 10px;
+  .cardWrapper {
+    border: 1px solid #cccccc;
+    padding: 20px 10px 10px 10px;
+  }
+}
+
+.formStyles {
+  margin: 0 auto;
+  @media only screen and (max-width: 769px) {
+    max-width: 260px;
+    width: 100%;
+    padding-top: 25px;
+  }
+  .innerStyles {
+    margin: 5px;
+    @media only screen and (max-width: 769px) {
+      width: 100%;
+    }
+  }
+}
