@@ -36,7 +36,6 @@ const ExtendedWeather: React.FC = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCalculatorNumber(+e.target.value);
-    console.log(e);
   };
 
   const minTemperature = (index: number) => {
@@ -103,7 +102,9 @@ const ExtendedWeather: React.FC = () => {
                           Filter by <b>max</b> temperature
                         </Button>
                       </Form>
-                      <p className={css.messageStyle}>* Default value is "0"</p>
+                      <p className={css.messageStyle}>
+                        * Default value in filter is "0"
+                      </p>
                       <Card.Body>
                         <Container>
                           <Row>
