@@ -1,6 +1,6 @@
 [
   {
-    "city_name": "Mumbai",
+    "city_name": "Mumbai 1",
     "country_code": "IN",
     "data": [
       {
@@ -13,8 +13,8 @@
         "wind_cdir": "SW",
         "wind_dir": 217,
         "temp": 30.3,
-        "max_temp": 32.9,
-        "min_temp": 28.1
+        "max_temp": 2,
+        "min_temp": 2
       },
       {
         "datetime": "2021-07-03",
@@ -26,8 +26,8 @@
         "wind_cdir": "SW",
         "wind_dir": 217,
         "temp": 30.3,
-        "max_temp": 32.9,
-        "min_temp": 28.1
+        "max_temp": 4,
+        "min_temp": 4
       },
       {
         "datetime": "2021-07-03",
@@ -39,8 +39,8 @@
         "wind_cdir": "SW",
         "wind_dir": 217,
         "temp": 30.3,
-        "max_temp": 32.9,
-        "min_temp": 28.1
+        "max_temp": 6,
+        "min_temp": 6
       },
       {
         "datetime": "2021-07-03",
@@ -52,8 +52,8 @@
         "wind_cdir": "SW",
         "wind_dir": 217,
         "temp": 30.3,
-        "max_temp": 32.9,
-        "min_temp": 28.1
+        "max_temp": 8,
+        "min_temp": 8
       },
       {
         "datetime": "2021-07-03",
@@ -65,8 +65,8 @@
         "wind_cdir": "SW",
         "wind_dir": 217,
         "temp": 30.3,
-        "max_temp": 32.9,
-        "min_temp": 28.1
+        "max_temp": 10,
+        "min_temp": 10
       },
       {
         "datetime": "2021-07-03",
@@ -78,13 +78,13 @@
         "wind_cdir": "SW",
         "wind_dir": 217,
         "temp": 30.3,
-        "max_temp": 32.9,
-        "min_temp": 28.1
+        "max_temp": 12,
+        "min_temp": 12
       }
     ]
   },
   {
-    "city_name": "Mumbai",
+    "city_name": "Mumbai 2",
     "country_code": "IN",
     "data": [
       {
@@ -97,8 +97,8 @@
         "wind_cdir": "SW",
         "wind_dir": 217,
         "temp": 30.3,
-        "max_temp": 32.9,
-        "min_temp": 28.1
+        "max_temp": 8,
+        "min_temp": 8
       },
       {
         "datetime": "2021-07-03",
@@ -110,8 +110,8 @@
         "wind_cdir": "SW",
         "wind_dir": 217,
         "temp": 30.3,
-        "max_temp": 32.9,
-        "min_temp": 28.1
+        "max_temp": 8,
+        "min_temp": 8
       },
       {
         "datetime": "2021-07-03",
@@ -123,8 +123,8 @@
         "wind_cdir": "SW",
         "wind_dir": 217,
         "temp": 30.3,
-        "max_temp": 32.9,
-        "min_temp": 28.1
+        "max_temp": 8,
+        "min_temp": 8
       },
       {
         "datetime": "2021-07-03",
@@ -136,8 +136,8 @@
         "wind_cdir": "SW",
         "wind_dir": 217,
         "temp": 30.3,
-        "max_temp": 32.9,
-        "min_temp": 28.1
+        "max_temp": 8,
+        "min_temp": 8
       },
       {
         "datetime": "2021-07-03",
@@ -149,8 +149,8 @@
         "wind_cdir": "SW",
         "wind_dir": 217,
         "temp": 30.3,
-        "max_temp": 32.9,
-        "min_temp": 28.1
+        "max_temp": 10,
+        "min_temp": 10
       },
       {
         "datetime": "2021-07-03",
@@ -162,8 +162,8 @@
         "wind_cdir": "SW",
         "wind_dir": 217,
         "temp": 30.3,
-        "max_temp": 32.9,
-        "min_temp": 28.1
+        "max_temp": 12,
+        "min_temp": 12
       }
     ]
   }
