@@ -8,9 +8,8 @@ import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
 import css from "./ExtendedWeather.module.scss";
-import ExtendedWeather2 from "../../services/extendedDay.json";
 import { ExtendedWeatherTypes, Days } from "../../types";
-import { calByMaxTemp } from "./helpers";
+import { calByMinTemp, calByMaxTemp } from "./helpers";
 
 const ExtendedWeather: React.FC = () => {
   const cities = [
@@ -21,78 +20,50 @@ const ExtendedWeather: React.FC = () => {
     { id: 1850147, city: "tokyo" },
   ];
 
-  // const { data: london } = useFetchCitiesQuery(cities[0].id);
-  // const { data: newYork } = useFetchCitiesQuery(cities[1].id);
-  // const { data: mumbai } = useFetchCitiesQuery(cities[2].id);
-  // const { data: sydney } = useFetchCitiesQuery(cities[3].id);
-  // const { data: tokyo } = useFetchCitiesQuery(cities[4].id);
-  const [calculatorNumber, setCalculatorNumber] = useState(0);
+  const { data: london } = useFetchCitiesQuery(cities[0].id);
+  const { data: newYork } = useFetchCitiesQuery(cities[1].id);
+  const { data: mumbai } = useFetchCitiesQuery(cities[2].id);
+  const { data: sydney } = useFetchCitiesQuery(cities[3].id);
+  const { data: tokyo } = useFetchCitiesQuery(cities[4].id);
 
-  const [weatherCards, setWeatherCards] =
-    useState<ExtendedWeatherTypes[]>(ExtendedWeather2);
+  const [calculatorNumber, setCalculatorNumber] = useState(0);
+  const fetchedWeatherCards: any = [london, newYork, mumbai, sydney, tokyo];
+  const [weatherCards, setWeatherCards] = useState(fetchedWeatherCards);
+
+  if (fetchedWeatherCards.indexOf(undefined) !== -1) {
+    return <div>Loading...</div>;
+  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCalculatorNumber(+e.target.value);
   };
 
-  const minTemperature = (index: number): any => {
-    let filtered;
-    if (weatherCards === ExtendedWeather2) {
-      filtered = weatherCards.map((x: ExtendedWeatherTypes, i: number) => {
-        if (index === i) {
-          const { data, ...restData } = x;
-          const newArray = data.filter(
-            (day: Days) => day.min_temp <= calculatorNumber
-          );
-          return { ...restData, data: [...newArray] };
-        } else {
-          return x;
-        }
-      });
+  const minTemperature = (index: number) => {
+    if (weatherCards === fetchedWeatherCards) {
+      setWeatherCards(calByMinTemp(weatherCards, calculatorNumber, index));
     } else {
-      filtered = ExtendedWeather2.map((x: ExtendedWeatherTypes, i: number) => {
-        if (index === i) {
-          const { data, ...restData } = x;
-          const newArray = data.filter(
-            (day: Days) => day.min_temp <= calculatorNumber
-          );
-          return { ...restData, data: [...newArray] };
-        } else {
-          return x;
-        }
-      });
+      setWeatherCards(
+        calByMinTemp(fetchedWeatherCards, calculatorNumber, index)
+      );
     }
-    setWeatherCards(filtered);
   };
 
-  const maxTemperature = (index: number): any => {
-    let filtered;
-    if (weatherCards === ExtendedWeather2) {
-      filtered = weatherCards.map((x: ExtendedWeatherTypes, i: number) => {
-        if (index === i) {
-          const { data, ...restData } = x;
-          const newArray = data.filter(
-            (day: Days) => day.min_temp >= calculatorNumber
-          );
-          return { ...restData, data: [...newArray] };
-        } else {
-          return x;
-        }
-      });
+  const maxTemperature = (index: number) => {
+    if (weatherCards === fetchedWeatherCards) {
+      setWeatherCards(calByMaxTemp(weatherCards, calculatorNumber, index));
     } else {
-      filtered = ExtendedWeather2.map((x: ExtendedWeatherTypes, i: number) => {
-        if (index === i) {
-          const { data, ...restData } = x;
-          const newArray = data.filter(
-            (day: Days) => day.min_temp >= calculatorNumber
-          );
-          return { ...restData, data: [...newArray] };
-        } else {
-          return x;
-        }
-      });
+      setWeatherCards(
+        calByMaxTemp(fetchedWeatherCards, calculatorNumber, index)
+      );
     }
-    setWeatherCards(filtered);
+  };
+
+  const displayData = () => {
+    if (weatherCards.indexOf(undefined) !== -1) {
+      return fetchedWeatherCards;
+    } else {
+      return weatherCards;
+    }
   };
 
   return (
@@ -101,63 +72,66 @@ const ExtendedWeather: React.FC = () => {
         <Row>
           <Col>
             <Card>
-              {weatherCards.map((city: ExtendedWeatherTypes, index: number) => {
-                return (
-                  <Card key={`key-${index}`} className="text-center">
-                    <Form inline>
-                      <FormControl
-                        type="text"
-                        placeholder="Search"
-                        className="mr-sm-2"
-                        onChange={handleChange}
-                      />
-                      <Button
-                        onClick={() => minTemperature(index)}
-                        variant="outline-success"
-                      >
-                        Filter by <b>min</b> temperature
-                      </Button>
-                      <Button
-                        onClick={() => maxTemperature(index)}
-                        variant="outline-success"
-                      >
-                        Filter by <b>max</b> temperature
-                      </Button>
-                    </Form>
-                    <Card.Header>
-                      <h2>{city?.city_name}</h2>
-                    </Card.Header>
-                    <Card.Body>
-                      <Container>
-                        <Row>
-                          {city?.data.map((day: Days, index: number) => {
-                            return (
-                              <Col
-                                key={`key-index-${index}`}
-                                xs={12}
-                                md={3}
-                                className={css.cardStyle}
-                              >
-                                <div className={css.cardWrapper}>
-                                  <Card.Title>Day: {day.datetime}</Card.Title>
-                                  <h4>Value: {day.min_temp}</h4>
-                                  <p>Temperature: {day.temp}</p>
-                                  <p>
-                                    Precipitation: {day.weather.description}
-                                  </p>
-                                  <p>
-                                    Wind: {day.wind_dir} {day.wind_cdir}
-                                  </p>
-                                </div>
-                              </Col>
-                            );
-                          })}
-                        </Row>
-                      </Container>
-                    </Card.Body>
-                  </Card>
-                );
-              })}
+              {displayData().map(
+                (city: ExtendedWeatherTypes, index: number) => {
+                  return (
+                    <Card key={`key-${index}`} className="text-center">
+                      <Card.Header>
+                        <h2>{city?.city_name}</h2>
+                      </Card.Header>
+                      <Form inline className={css.formStyles}>
+                        <FormControl
+                          type="text"
+                          placeholder="Search"
+                          className={css.innerStyles}
+                          onChange={handleChange}
+                        />
+                        <Button
+                          onClick={() => minTemperature(index)}
+                          variant="outline-success"
+                          className={css.innerStyles}
+                        >
+                          Filter by <b>min</b> temperature
+                        </Button>
+                        <Button
+                          onClick={() => maxTemperature(index)}
+                          variant="outline-success"
+                          className={css.innerStyles}
+                        >
+                          Filter by <b>max</b> temperature
+                        </Button>
+                      </Form>
+                      <Card.Body>
+                        <Container>
+                          <Row>
+                            {city?.data.map((day: Days, index: number) => {
+                              return (
+                                <Col
+                                  key={`key-index-${index}`}
+                                  xs={12}
+                                  md={3}
+                                  className={css.cardStyle}
+                                >
+                                  <div className={css.cardWrapper}>
+                                    <Card.Title>Day: {day.datetime}</Card.Title>
+                                    <p>Temperature: {day.temp}</p>
+                                    <p>
+                                      Precipitation: {day.weather.description}
+                                    </p>
+                                    <p>
+                                      Wind: {day.wind_dir} {day.wind_cdir}
+                                    </p>
+                                  </div>
+                                </Col>
+                              );
+                            })}
+                          </Row>
+                        </Container>
+                      </Card.Body>
+                    </Card>
+                  );
+                }
+              )}
             </Card>
           </Col>
         </Row>

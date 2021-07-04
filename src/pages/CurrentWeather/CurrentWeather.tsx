@@ -6,12 +6,12 @@ import Card from "react-bootstrap/Card";
 import { useFetchCityQuery } from "../../features/cities/citiesApi";
 
 const CurrentWeather: React.FC = () => {
-  // const { data } = useFetchCityQuery();
+  const { data } = useFetchCityQuery();
   return (
     <div>
       <Container>
         <Row>
-          {/* {data?.data.map((city, index) => (
+          {data?.data.map((city, index) => (
             <Col key={`key-${index}`}>
               <Card className="text-center">
                 <Card.Header>
@@ -31,7 +31,7 @@ const CurrentWeather: React.FC = () => {
                 </Card.Footer>
               </Card>
             </Col>
-          ))} */}
+          ))}
         </Row>
       </Container>
     </div>

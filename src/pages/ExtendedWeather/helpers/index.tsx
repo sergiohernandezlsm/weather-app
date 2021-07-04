@@ -1,6 +1,6 @@
 import { ExtendedWeatherTypes, Days } from "../../../types";
 
-export const calFunc = (
+export const calByMinTemp = (
   data: ExtendedWeatherTypes[],
   calculator: number,
   index: number
@@ -8,7 +8,7 @@ export const calFunc = (
   return data.map((x: ExtendedWeatherTypes, i: number) => {
     if (index === i) {
       const { data, ...restData } = x;
-      const newArray = data.filter((day: Days) => day.min_temp <= calculator);
+      const newArray = data.filter((day: Days) => day.temp <= calculator);
       return { ...restData, data: [...newArray] };
     } else {
       return x;
@@ -24,7 +24,7 @@ export const calByMaxTemp = (
   return data.map((x: ExtendedWeatherTypes, i: number) => {
     if (index === i) {
       const { data, ...restData } = x;
-      const newArray = data.filter((day: Days) => day.min_temp >= calculator);
+      const newArray = data.filter((day: Days) => day.temp >= calculator);
       return { ...restData, data: [...newArray] };
     } else {
       return x;
