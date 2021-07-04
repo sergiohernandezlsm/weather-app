@@ -9,9 +9,8 @@ import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
 import css from "./ExtendedWeather.module.scss";
 import ExtendedWeather2 from "../../services/extendedDay.json";
-import { useAppSelector } from "../../app/hooks";
-import { useEffect } from "react";
-import { ExtendedWeatherTypes } from "../../types";
+import { ExtendedWeatherTypes, Days } from "../../types";
+import { calFunc, calByMaxTemp } from "./helpers";
 
 const ExtendedWeather: React.FC = () => {
   const cities = [
@@ -27,38 +26,28 @@ const ExtendedWeather: React.FC = () => {
   // const { data: mumbai } = useFetchCitiesQuery(cities[2].id);
   // const { data: sydney } = useFetchCitiesQuery(cities[3].id);
   // const { data: tokyo } = useFetchCitiesQuery(cities[4].id);
-  const [calNumber, setCalNumber] = useState(0);
-  const [weatherCards, setWeatherCards] = useState<any>(ExtendedWeather2);
+  const [calculatorNumber, setCalculatorNumber] = useState(0);
 
-  const handleChange = (e: any) => {
-    setCalNumber(e.target.value);
+  const [weatherCards, setWeatherCards] =
+    useState<ExtendedWeatherTypes[]>(ExtendedWeather2);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCalculatorNumber(+e.target.value);
   };
 
-  const minTemperature = (calNumber: number, index: number) => {
-    let filtered;
+  const minTemperature = (index: number) => {
     if (weatherCards === ExtendedWeather2) {
-      filtered = weatherCards.map((x: any, i: number) => {
-        if (index === i) {
-          const { data, ...restData } = x;
-          const newArray = data.filter((day: any) => day.min_temp >= calNumber);
-          return { ...restData, data: [...newArray] };
-        } else {
-          return x;
-        }
-      });
+      setWeatherCards(calFunc(weatherCards, calculatorNumber, index));
     } else {
-      filtered = ExtendedWeather2.map((x: any, i: number) => {
-        if (index === i) {
-          const { data, ...restData } = x;
-          const newArray = data.filter((day: any) => day.min_temp >= calNumber);
-          return { ...restData, data: [...newArray] };
-        } else {
-          return x;
-        }
-      });
+      setWeatherCards(calFunc(ExtendedWeather2, calculatorNumber, index));
     }
-
-    setWeatherCards(filtered);
+  };
+  const maxTemperature = (index: number) => {
+    if (weatherCards === ExtendedWeather2) {
+      setWeatherCards(calByMaxTemp(weatherCards, calculatorNumber, index));
+    } else {
+      setWeatherCards(calByMaxTemp(weatherCards, calculatorNumber, index));
+    }
   };
 
   return (
@@ -67,10 +56,13 @@ const ExtendedWeather: React.FC = () => {
         <Row>
           <Col>
             <Card>
-              {weatherCards.map((city: any, index: any) => {
+              {weatherCards.map((city: ExtendedWeatherTypes, index: number) => {
                 return (
                   <Card key={`key-${index}`} className="text-center">
                     <Form inline>
+                      <p>
+                        Filter by <b>min</b> temperature
+                      </p>
                       <FormControl
                         type="text"
                         placeholder="Search"
@@ -78,7 +70,24 @@ const ExtendedWeather: React.FC = () => {
                         onChange={handleChange}
                       />
                       <Button
-                        onClick={() => minTemperature(calNumber, index)}
+                        onClick={() => minTemperature(index)}
+                        variant="outline-success"
+                      >
+                        Filter
+                      </Button>
+                    </Form>
+                    <Form inline>
+                      <p>
+                        Filter by <b>max</b> temperature
+                      </p>
+                      <FormControl
+                        type="text"
+                        placeholder="Search"
+                        className="mr-sm-2"
+                        onChange={handleChange}
+                      />
+                      <Button
+                        onClick={() => maxTemperature(index)}
                         variant="outline-success"
                       >
                         Filter
@@ -90,7 +99,7 @@ const ExtendedWeather: React.FC = () => {
                     <Card.Body>
                       <Container>
                         <Row>
-                          {city?.data.map((day: any, index: any) => {
+                          {city?.data.map((day: Days, index: number) => {
                             return (
                               <Col
                                 key={`key-index-${index}`}
