@@ -19,12 +19,19 @@ const CurrentWeather: React.FC = () => {
                 </Card.Header>
                 <Card.Body>
                   <Card.Title>Day: {city.datetime}</Card.Title>
-                  <p>Temperature: {city.temp}</p>
-                  <p>Precipitation: {city.weather.description}</p>
                   <p>
-                    Wind: {city.wind_dir} {city.wind_cdir}
+                    <b>Temperature:</b> {city.temp}
                   </p>
-                  <p>description: {city.weather.description}</p>
+                  <p>
+                    <b>Precipitation:</b> {city.weather.description}
+                  </p>
+                  <p>
+                    <b>Wind:</b>
+                    {city.wind_dir} {city.wind_cdir}
+                  </p>
+                  <p>
+                    <b>Description:</b> {city.weather.description}
+                  </p>
                 </Card.Body>
                 <Card.Footer className="text-muted">
                   clouds: {city.clouds}
