@@ -31,7 +31,7 @@ const ExtendedWeather: React.FC = () => {
   const [weatherCards, setWeatherCards] = useState(fetchedWeatherCards);
 
   if (fetchedWeatherCards.indexOf(undefined) !== -1) {
-    return <div>Loading...</div>;
+    return <div>Loading data...</div>;
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
