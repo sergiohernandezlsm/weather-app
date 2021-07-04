@@ -10,7 +10,7 @@ import Button from "react-bootstrap/Button";
 import css from "./ExtendedWeather.module.scss";
 import ExtendedWeather2 from "../../services/extendedDay.json";
 import { ExtendedWeatherTypes, Days } from "../../types";
-import { calFunc, calByMaxTemp } from "./helpers";
+import { calByMaxTemp } from "./helpers";
 
 const ExtendedWeather: React.FC = () => {
   const cities = [
@@ -35,19 +35,64 @@ const ExtendedWeather: React.FC = () => {
     setCalculatorNumber(+e.target.value);
   };
 
-  const minTemperature = (index: number) => {
+  const minTemperature = (index: number): any => {
+    let filtered;
     if (weatherCards === ExtendedWeather2) {
-      setWeatherCards(calFunc(weatherCards, calculatorNumber, index));
+      filtered = weatherCards.map((x: ExtendedWeatherTypes, i: number) => {
+        if (index === i) {
+          const { data, ...restData } = x;
+          const newArray = data.filter(
+            (day: Days) => day.min_temp <= calculatorNumber
+          );
+          return { ...restData, data: [...newArray] };
+        } else {
+          return x;
+        }
+      });
     } else {
-      setWeatherCards(calFunc(ExtendedWeather2, calculatorNumber, index));
+      filtered = ExtendedWeather2.map((x: ExtendedWeatherTypes, i: number) => {
+        if (index === i) {
+          const { data, ...restData } = x;
+          const newArray = data.filter(
+            (day: Days) => day.min_temp <= calculatorNumber
+          );
+          return { ...restData, data: [...newArray] };
+        } else {
+          return x;
+        }
+      });
     }
+    setWeatherCards(filtered);
   };
-  const maxTemperature = (index: number) => {
+
+  const maxTemperature = (index: number): any => {
+    let filtered;
     if (weatherCards === ExtendedWeather2) {
-      setWeatherCards(calByMaxTemp(weatherCards, calculatorNumber, index));
+      filtered = weatherCards.map((x: ExtendedWeatherTypes, i: number) => {
+        if (index === i) {
+          const { data, ...restData } = x;
+          const newArray = data.filter(
+            (day: Days) => day.min_temp >= calculatorNumber
+          );
+          return { ...restData, data: [...newArray] };
+        } else {
+          return x;
+        }
+      });
     } else {
-      setWeatherCards(calByMaxTemp(weatherCards, calculatorNumber, index));
+      filtered = ExtendedWeather2.map((x: ExtendedWeatherTypes, i: number) => {
+        if (index === i) {
+          const { data, ...restData } = x;
+          const newArray = data.filter(
+            (day: Days) => day.min_temp >= calculatorNumber
+          );
+          return { ...restData, data: [...newArray] };
+        } else {
+          return x;
+        }
+      });
     }
+    setWeatherCards(filtered);
   };
 
   return (
@@ -60,9 +105,6 @@ const ExtendedWeather: React.FC = () => {
                 return (
                   <Card key={`key-${index}`} className="text-center">
                     <Form inline>
-                      <p>
-                        Filter by <b>min</b> temperature
-                      </p>
                       <FormControl
                         type="text"
                         placeholder="Search"
@@ -73,24 +115,13 @@ const ExtendedWeather: React.FC = () => {
                         onClick={() => minTemperature(index)}
                         variant="outline-success"
                       >
-                        Filter
+                        Filter by <b>min</b> temperature
                       </Button>
-                    </Form>
-                    <Form inline>
-                      <p>
-                        Filter by <b>max</b> temperature
-                      </p>
-                      <FormControl
-                        type="text"
-                        placeholder="Search"
-                        className="mr-sm-2"
-                        onChange={handleChange}
-                      />
                       <Button
                         onClick={() => maxTemperature(index)}
                         variant="outline-success"
                       >
-                        Filter
+                        Filter by <b>max</b> temperature
                       </Button>
                     </Form>
                     <Card.Header>
