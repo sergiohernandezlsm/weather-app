@@ -18,7 +18,7 @@ $ make install
 
 ## Environment variables for API key in .env file (required)
 
-- create .env file in the roof of the project checking .env-example file as a reference
+- create .env file in the root of the project checking .env-example file as a reference
 - replace api key "REACT_APP_WEATHER_API_KEY" with yours
 - ref: https://rapidapi.com/weatherbit/api/weather
 
