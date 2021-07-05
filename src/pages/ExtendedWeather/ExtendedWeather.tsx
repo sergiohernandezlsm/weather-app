@@ -85,7 +85,7 @@ const ExtendedWeather: React.FC = () => {
                           placeholder="Add number to filter"
                           className={css.innerStyles}
                           onChange={handleChange}
-                          defaultValue={""}
+                          defaultValue={0}
                         />
                         <Button
                           onClick={() => minTemperature(index)}
