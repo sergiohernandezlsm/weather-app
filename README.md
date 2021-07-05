@@ -16,17 +16,20 @@ Install your dependencies:
 $ make install
 ```
 
+## Environment variables for API key in .env file (required)
+
+- create .env file in the roof of the project checking .env-example file as a reference
+- replace api key "REACT_APP_WEATHER_API_KEY" with yours
+- ref: https://rapidapi.com/weatherbit/api/weather
+
+Note: Find .env-example file in the root of this project
+
 ## Start React application
 
 npm run start
-
-## Env variables in .env file
-
-- change endpoind key to run the right api
-- ref: https://rapidapi.com/weatherbit/api/weather
 
 ## To run the app locally
 
 **Visit:** [http://localhost:3000/](http://localhost:3000/)
 
-### We are using Redux to fecth the api data however in the website provided I coudn't find any good api to fetch several cities at the same time hope this way is ok for now.
+### We are using Redux to fecth the api data however in the website provided I coudn't find any good api to fetch several cities at the same time hope this solution to display more cities is ok for now.

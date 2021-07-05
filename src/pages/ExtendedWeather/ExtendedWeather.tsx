@@ -26,7 +26,7 @@ const ExtendedWeather: React.FC = () => {
   const { data: sydney } = useFetchCitiesQuery(cities[3].id);
   const { data: tokyo } = useFetchCitiesQuery(cities[4].id);
 
-  const [calculatorNumber, setCalculatorNumber] = useState(0);
+  const [calculatorNumber, setCalculatorNumber] = useState<number>(0);
   const fetchedWeatherCards: any = [london, newYork, mumbai, sydney, tokyo];
   const [weatherCards, setWeatherCards] = useState(fetchedWeatherCards);
 
@@ -81,7 +81,7 @@ const ExtendedWeather: React.FC = () => {
                       </Card.Header>
                       <Form inline className={css.formStyles}>
                         <FormControl
-                          type="text"
+                          type="number"
                           placeholder="Add number to filter"
                           className={css.innerStyles}
                           onChange={handleChange}
@@ -103,7 +103,8 @@ const ExtendedWeather: React.FC = () => {
                         </Button>
                       </Form>
                       <p className={css.messageStyle}>
-                        * Default value in filter is "0"
+                        * Add value to filter days by temperature, default value
+                        is "0"
                       </p>
                       <Card.Body>
                         <Container>
