@@ -31,5 +31,3 @@ npm run start
 ## To run the app locally
 
 **Visit:** [http://localhost:3000/](http://localhost:3000/)
-
-### We are using Redux to fecth the api data however in the website provided I coudn't find any good api to fetch several cities at the same time hope this solution to display more cities is ok for now.
